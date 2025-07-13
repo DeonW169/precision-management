@@ -1,0 +1,48 @@
+{
+    "name": "precision-management-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "keywords": [
+        "example",
+        "heroku"
+    ],
+    "author": "Deon Wolmarans",
+    "dependencies": {
+        "aws-sdk": "2.831.0",
+        "bcryptjs": "2.4.3",
+        "body-parser": "1.18.2",
+        "cors": "^2.8.5",
+        "crypto": "^1.0.1",
+        "dotenv": "^8.2.0",
+        "ejs": "^2.7.4",
+        "express": "^4.19.2",
+        "express-validator": "^6.8.0",
+        "firebase-admin": "^13.4.0",
+        "fs": "^0.0.1-security",
+        "jsonwebtoken": "8.2.0",
+        "jwt-simple": "^0.5.6",
+        "mongoose": "^5.8.7",
+        "morgan": "^1.10.0",
+        "multer": "1.4.4",
+        "multer-s3": "2.9.0",
+        "passport": "0.4.0",
+        "passport-jwt": "4.0.0",
+        "path": "^0.12.7",
+        "validator": "9.4.1"
+    },
+    "engines": {
+        "node": "20.3.0"
+    },
+    "files": [
+        "src/**/*"
+    ],
+    "devDependencies": {
+        "@types/node": "^24.0.13",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.3"
+    }
+}
