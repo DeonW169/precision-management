@@ -292,7 +292,7 @@ const addMember = async (cardId, listId, boardId, user, memberId, callback) => {
     const card = await Card.findById(cardId);
     const list = await List.findById(listId);
     const board = await Board.findById(boardId);
-    const member = await userModel.findById(memberId);
+    const member = await User.findById(memberId);
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
@@ -343,36 +343,37 @@ const deleteMember = async (
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to add member this card";
-    }
+    if (!validate)
+      return callback({
+        message: "You do not have permission to delete this card",
+      });
 
-    //delete member
+    // Delete member
     card.members = card.members.filter(
       (a) => a.user.toString() !== memberId.toString()
     );
     await card.save();
 
-    //get member
-    const tempMember = await userModel.findById(memberId);
+    // Get member
+    const tempMember = await User.findById(memberId);
 
-    //Add to board activity
+    // Add to board activity
     board.activity.unshift({
       user: user._id,
       name: user.name,
       action:
         tempMember.name === user.name
           ? `left ${card.title}`
-          : `removed '${tempMember.name}' from ${card.title}`,
+          : `${user.name} removed '${tempMember.name}' from ${card.title}`,
       color: user.color,
     });
     board.save();
 
-    return callback(false, { message: "success" });
+    return callback(false, { message: "Member removed" });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to remove member",
+      error,
     });
   }
 };
@@ -386,15 +387,16 @@ const createLabel = async (cardId, listId, boardId, user, label, callback) => {
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to add label this card";
-    }
+    if (!validate)
+      return callback({
+        message: "You do not have permission to delete this card",
+      });
 
-    //Add label
+    // Add label
     card.labels.unshift({
       text: label.text,
       color: label.color,
-      backcolor: label.backColor,
+      backColor: label.backColor,
       selected: true,
     });
     await card.save();
@@ -404,8 +406,8 @@ const createLabel = async (cardId, listId, boardId, user, label, callback) => {
     return callback(false, { labelId: labelId });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to create label",
+      error,
     });
   }
 };
@@ -427,11 +429,12 @@ const updateLabel = async (
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to update this card";
-    }
+    if (!validate)
+      return callback({
+        message: "You do not have permission to delete this card",
+      });
 
-    //Update label
+    // Update label
     card.labels = card.labels.map((item) => {
       if (item._id.toString() === labelId.toString()) {
         item.text = label.text;
@@ -442,11 +445,11 @@ const updateLabel = async (
     });
     await card.save();
 
-    return callback(false, { message: "Success!" });
+    return callback(false, { message: "Label Updated" });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to update label",
+      error,
     });
   }
 };
@@ -467,21 +470,22 @@ const deleteLabel = async (
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to delete this label";
-    }
+    if (!validate)
+      return callback({
+        message: "You do not have permission to delete this card",
+      });
 
-    //Delete label
+    // Delete label
     card.labels = card.labels.filter(
       (label) => label._id.toString() !== labelId.toString()
     );
     await card.save();
 
-    return callback(false, { message: "Success!" });
+    return callback(false, { message: "Label deleted" });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to delete the label",
+      error,
     });
   }
 };
@@ -503,11 +507,12 @@ const updateLabelSelection = async (
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to update this card";
-    }
+    if (!validate)
+      return callback({
+        message: "You do not have permission to delete this card",
+      });
 
-    //Update label
+    // Update label
     card.labels = card.labels.map((item) => {
       if (item._id.toString() === labelId.toString()) {
         item.selected = selected;
@@ -516,11 +521,11 @@ const updateLabelSelection = async (
     });
     await card.save();
 
-    return callback(false, { message: "Success!" });
+    return callback(false, { message: "Label added to card" });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to assign label to card",
+      error,
     });
   }
 };
@@ -541,11 +546,12 @@ const createChecklist = async (
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to add Checklist this card";
-    }
+    if (!validate)
+      return callback({
+        message: "You do not have permission to delete this card",
+      });
 
-    //Add checklist
+    // Add checklist
     card.checklists.push({
       title: title,
     });
@@ -553,11 +559,11 @@ const createChecklist = async (
 
     const checklistId = card.checklists[card.checklists.length - 1]._id;
 
-    //Add to board activity
+    // Add to board activity
     board.activity.unshift({
       user: user._id,
       name: user.name,
-      action: `added '${title}' to ${card.title}`,
+      action: `${user.name} added '${title}' to ${card.title}`,
       color: user.color,
     });
     board.save();
@@ -565,8 +571,8 @@ const createChecklist = async (
     return callback(false, { checklistId: checklistId });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to add checklist",
+      error,
     });
   }
 };
@@ -587,32 +593,35 @@ const deleteChecklist = async (
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to delete this checklist";
-    }
+    if (!validate)
+      return callback({
+        message: "You do not have permission to delete this checklist",
+      });
+
     let cl = card.checklists.filter(
       (l) => l._id.toString() === checklistId.toString()
     );
-    //Delete checklist
+
+    // Delete checklist
     card.checklists = card.checklists.filter(
       (list) => list._id.toString() !== checklistId.toString()
     );
     await card.save();
 
-    //Add to board activity
+    // Add to board activity
     board.activity.unshift({
       user: user._id,
       name: user.name,
-      action: `removed '${cl.title}' from ${card.title}`,
+      action: `${user.name} removed '${cl.title}' from ${card.title}`,
       color: user.color,
     });
     board.save();
 
-    return callback(false, { message: "Success!" });
+    return callback(false, { message: "Checklist deleted" });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to delete checklist",
+      error,
     });
   }
 };
@@ -634,11 +643,12 @@ const addChecklistItem = async (
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to add item this checklist";
-    }
+    if (!validate)
+      return callback({
+        message: "You do not have permission to add item to this checklist",
+      });
 
-    //Add checklistItem
+    // Add checklistItem
     card.checklists = card.checklists.map((list) => {
       if (list._id.toString() == checklistId.toString()) {
         list.items.push({ text: text });
@@ -655,11 +665,12 @@ const addChecklistItem = async (
       }
       return list;
     });
-    return callback(false, { checklistItemId: checklistItemId });
+
+    return callback(false, { checklistItemId });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to create checklist item",
+      error,
     });
   }
 };
@@ -682,11 +693,13 @@ const setChecklistItemCompleted = async (
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to set complete of this checklist item";
-    }
+    if (!validate)
+      return callback({
+        message: "You do not have permission to update item to this checklist",
+      });
+
     let clItem = "";
-    //Update completed of checklistItem
+    // Update completed (status) of checklistItem
     card.checklists = card.checklists.map((list) => {
       if (list._id.toString() == checklistId.toString()) {
         list.items = list.items.map((item) => {
@@ -701,7 +714,7 @@ const setChecklistItemCompleted = async (
     });
     await card.save();
 
-    //Add to board activity
+    // Add to board activity
     board.activity.unshift({
       user: user._id,
       name: user.name,
@@ -712,11 +725,11 @@ const setChecklistItemCompleted = async (
     });
     board.save();
 
-    return callback(false, { message: "Success!" });
+    return callback(false, { message: "Mark as completed" });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to change completed status",
+      error,
     });
   }
 };
@@ -739,11 +752,12 @@ const setChecklistItemText = async (
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to set text of this checklist item";
-    }
+    if (!validate)
+      return callback({
+        message: "You do not have permission to update item to this checklist",
+      });
 
-    //Update text of checklistItem
+    // Update text of checklistItem
     card.checklists = card.checklists.map((list) => {
       if (list._id.toString() == checklistId.toString()) {
         list.items = list.items.map((item) => {
@@ -755,12 +769,13 @@ const setChecklistItemText = async (
       }
       return list;
     });
+
     await card.save();
-    return callback(false, { message: "Success!" });
+    return callback(false, { message: "Item text updated" });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to update text",
+      error,
     });
   }
 };
@@ -782,11 +797,13 @@ const deleteChecklistItem = async (
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to delete this checklist item";
-    }
+    if (!validate)
+      return callback({
+        message:
+          "You do not have permission to delete item from this checklist",
+      });
 
-    //Delete checklistItem
+    // Delete checklistItem
     card.checklists = card.checklists.map((list) => {
       if (list._id.toString() == checklistId.toString()) {
         list.items = list.items.filter(
@@ -795,12 +812,13 @@ const deleteChecklistItem = async (
       }
       return list;
     });
+
     await card.save();
-    return callback(false, { message: "Success!" });
+    return callback(false, { message: "Checklist item deleted" });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to delete the checklist item",
+      error,
     });
   }
 };
@@ -823,21 +841,22 @@ const updateStartDueDates = async (
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to update date of this card";
-    }
+    if (!validate)
+      return callback({
+        message: "You do not have permission to update card in this checklist",
+      });
 
-    //Update dates
+    // Update dates
     card.date.startDate = startDate;
     card.date.dueDate = dueDate;
     card.date.dueTime = dueTime;
     if (dueDate === null) card.date.completed = false;
     await card.save();
-    return callback(false, { message: "Success!" });
+    return callback(false, { message: "Card updated" });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to update card",
+      error,
     });
   }
 };
@@ -858,31 +877,33 @@ const updateDateCompleted = async (
 
     // Validate owner
     const validate = await validateCardOwners(card, list, board, user, false);
-    if (!validate) {
-      message: "You dont have permission to update date of this card";
-    }
+    if (!validate)
+      return callback({
+        message:
+          "You do not have permission to update card date in this checklist",
+      });
 
-    //Update date completed event
+    // Update date completed event
     card.date.completed = completed;
 
     await card.save();
 
-    //Add to board activity
+    // Add to board activity
     board.activity.unshift({
       user: user._id,
       name: user.name,
       action: `marked the due date on ${card.title} ${
-        completed ? "complete" : "uncomplete"
+        completed ? "complete" : "not complete"
       }`,
       color: user.color,
     });
     board.save();
 
-    return callback(false, { message: "Success!" });
+    return callback(false, { message: "Completed status updated" });
   } catch (error) {
     return callback({
-      message: "Something went wrong",
-      details: error.message,
+      message: "Failed to update status",
+      error,
     });
   }
 };
