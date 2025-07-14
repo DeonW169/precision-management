@@ -17,6 +17,12 @@ code {
     monospace;
 }
 
+* {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
 .bg-app-container {
   /* background-color: rgba(255,219,187, 0.85); */
   margin: 15px;
