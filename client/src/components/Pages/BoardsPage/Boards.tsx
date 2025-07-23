@@ -1,24 +1,24 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getBoards } from "../../Redux/Slices/boardsSlice";
-import { BoardsContainer, BoardCard, BoardTitle } from "./Styled";
-import { useHistory } from "react-router-dom";
+import { startFetchingBoards } from "../../../redux/slices/boardsSlice";
+import { BoardsContainer, BoardCard, BoardTitle } from "./styled";
+import { useNavigate } from "react-router-dom";
 
 const Boards: React.FC = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const boards = useSelector((state: any) => state.boards.boards);
 
   useEffect(() => {
-    dispatch(getBoards());
+    dispatch(startFetchingBoards());
   }, [dispatch]);
 
   return (
     <BoardsContainer>
-      {boards.map((board: any) => (
+      {boards?.map((board: any) => (
         <BoardCard
           key={board._id}
-          onClick={() => history.push(`/board/${board._id}`)}
+          onClick={() => navigate(`/board/${board._id}`)}
         >
           <BoardTitle>{board.title}</BoardTitle>
         </BoardCard>

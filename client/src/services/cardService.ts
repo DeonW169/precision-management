@@ -53,8 +53,8 @@ import {
     deleteAttachmentOfCard,
     updateCoverOfCard,
 } from '../redux/slices/listSlice';
+import { Routes } from '../api/routes';
 
-const baseUrl = 'http://localhost:3001/card';
 let submitCall: Promise<any> = Promise.resolve();
 
 export const getCard = async (
@@ -67,7 +67,7 @@ export const getCard = async (
     try {
         let response: any;
         submitCall = submitCall.then(() =>
-            axios.get(`${baseUrl}/${boardId}/${listId}/${cardId}`).then((res) => {
+            axios.get(`${Routes.CARD}/${boardId}/${listId}/${cardId}`).then((res) => {
                 response = res;
             })
         );
@@ -80,7 +80,7 @@ export const getCard = async (
         dispatch(setPending(false));
         dispatch(
             openAlert({
-                message: error?.response?.data?.errMessage ?? error.message,
+                message: error?.response?.data?.message ?? error.message,
                 severity: 'error',
             })
         );
@@ -99,13 +99,13 @@ export const titleUpdate = async (
         dispatch(updateTitle(title));
 
         submitCall = submitCall.then(() =>
-            axios.put(`${baseUrl}/${boardId}/${listId}/${cardId}`, { title })
+            axios.put(`${Routes.CARD}/${boardId}/${listId}/${cardId}`, { title })
         );
         await submitCall;
     } catch (error: any) {
         dispatch(
             openAlert({
-                message: error?.response?.data?.errMessage ?? error.message,
+                message: error?.response?.data?.message ?? error.message,
                 severity: 'error',
             })
         );
@@ -124,13 +124,13 @@ export const descriptionUpdate = async (
         dispatch(updateDescriptionOfCard({ listId, cardId, description }));
 
         submitCall = submitCall.then(() =>
-            axios.put(`${baseUrl}/${boardId}/${listId}/${cardId}`, { description })
+            axios.put(`${Routes.CARD}/${boardId}/${listId}/${cardId}`, { description })
         );
         await submitCall;
     } catch (error: any) {
         dispatch(
             openAlert({
-                message: error?.response?.data?.errMessage ?? error.message,
+                message: error?.response?.data?.message ?? error.message,
                 severity: 'error',
             })
         );
@@ -151,7 +151,7 @@ export const comment = async (
         let response: any;
         submitCall = submitCall.then(() =>
             axios
-                .post(`${baseUrl}/${boardId}/${listId}/${cardId}/add-comment`, { text })
+                .post(`${Routes.CARD}/${boardId}/${listId}/${cardId}/add-comment`, { text })
                 .then((res) => {
                     response = res;
                 })
@@ -164,7 +164,7 @@ export const comment = async (
         dispatch(setPending(false));
         dispatch(
             openAlert({
-                message: error?.response?.data?.errMessage ?? error.message,
+                message: error?.response?.data?.message ?? error.message,
                 severity: 'error',
             })
         );
@@ -183,13 +183,13 @@ export const commentUpdate = async (
         dispatch(updateComment({ commentId, text }));
 
         submitCall = submitCall.then(() =>
-            axios.put(`${baseUrl}/${boardId}/${listId}/${cardId}/${commentId}`, { text })
+            axios.put(`${Routes.CARD}/${boardId}/${listId}/${cardId}/${commentId}`, { text })
         );
         await submitCall;
     } catch (error: any) {
         dispatch(
             openAlert({
-                message: error?.response?.data?.errMessage ?? error.message,
+                message: error?.response?.data?.message ?? error.message,
                 severity: 'error',
             })
         );
@@ -207,11 +207,11 @@ export const commentDelete = async (
         dispatch(deleteComment(commentId));
 
         submitCall = submitCall.then(() =>
-            axios.delete(`${baseUrl}/${boardId}/${listId}/${cardId}/${commentId}`)
+            axios.delete(`${Routes.CARD}/${boardId}/${listId}/${cardId}/${commentId}`)
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -229,11 +229,11 @@ export const memberAdd = async (
         dispatch(updateMemberOfCard({ listId, cardId, memberId, memberName, memberColor }));
 
         submitCall = submitCall.then(() =>
-            axios.post(`${baseUrl}/${boardId}/${listId}/${cardId}/add-member`, { memberId })
+            axios.post(`${Routes.CARD}/${boardId}/${listId}/${cardId}/add-member`, { memberId })
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -250,11 +250,11 @@ export const memberDelete = async (
         dispatch(deleteMemberOfCard({ listId, cardId, memberId }));
 
         submitCall = submitCall.then(() =>
-            axios.delete(`${baseUrl}/${boardId}/${listId}/${cardId}/${memberId}/delete-member`)
+            axios.delete(`${Routes.CARD}/${boardId}/${listId}/${cardId}/${memberId}/delete-member`)
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -273,7 +273,7 @@ export const labelCreate = async (
         let response: any;
         submitCall = submitCall.then(() =>
             axios
-                .post(`${baseUrl}/${boardId}/${listId}/${cardId}/create-label`, { text, color, backColor })
+                .post(`${Routes.CARD}/${boardId}/${listId}/${cardId}/create-label`, { text, color, backColor })
                 .then((res) => {
                     response = res;
                 })
@@ -289,11 +289,11 @@ export const labelCreate = async (
                 text,
                 color,
                 backColor,
-                selected: true,
+                // selected: true,
             })
         );
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -306,7 +306,10 @@ export const labelUpdate = async (
     dispatch: AppDispatch
 ) => {
     try {
-        dispatch(updateLabel({ labelId, text: label.text, color: label.color, backColor: label.backColor }));
+        dispatch(updateLabel({
+            labelId, text: label.text, color: label.color, backColor: label.backColor,
+            _id: ''
+        }));
         dispatch(
             updateLabelOfCard({
                 listId,
@@ -319,11 +322,11 @@ export const labelUpdate = async (
         );
 
         submitCall = submitCall.then(() =>
-            axios.put(`${baseUrl}/${boardId}/${listId}/${cardId}/${labelId}/update-label`, label)
+            axios.put(`${Routes.CARD}/${boardId}/${listId}/${cardId}/${labelId}/update-label`, label)
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -339,11 +342,11 @@ export const labelDelete = async (
         dispatch(deleteLabelOfCard({ listId, cardId, labelId }));
 
         submitCall = submitCall.then(() =>
-            axios.delete(`${baseUrl}/${boardId}/${listId}/${cardId}/${labelId}/delete-label`)
+            axios.delete(`${Routes.CARD}/${boardId}/${listId}/${cardId}/${labelId}/delete-label`)
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -360,11 +363,11 @@ export const labelUpdateSelection = async (
         dispatch(updateLabelSelectionOfCard({ listId, cardId, labelId, selected }));
 
         submitCall = submitCall.then(() =>
-            axios.put(`${baseUrl}/${boardId}/${listId}/${cardId}/${labelId}/update-label-selection`, { selected })
+            axios.put(`${Routes.CARD}/${boardId}/${listId}/${cardId}/${labelId}/update-label-selection`, { selected })
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -381,7 +384,7 @@ export const checklistCreate = async (
         let response: any;
         submitCall = submitCall.then(() =>
             axios
-                .post(`${baseUrl}/${boardId}/${listId}/${cardId}/create-checklist`, { title })
+                .post(`${Routes.CARD}/${boardId}/${listId}/${cardId}/create-checklist`, { title })
                 .then((res) => {
                     response = res;
                 })
@@ -391,7 +394,7 @@ export const checklistCreate = async (
         dispatch(updateCreatedChecklist(response.data.checklistId));
         dispatch(createChecklistForCard({ listId, cardId, _id: response.data.checklistId, title }));
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -407,11 +410,11 @@ export const checklistDelete = async (
         dispatch(deleteChecklistOfCard({ listId, cardId, checklistId }));
 
         submitCall = submitCall.then(() =>
-            axios.delete(`${baseUrl}/${boardId}/${listId}/${cardId}/${checklistId}/delete-checklist`)
+            axios.delete(`${Routes.CARD}/${boardId}/${listId}/${cardId}/${checklistId}/delete-checklist`)
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -429,7 +432,7 @@ export const checklistItemAdd = async (
         let response: any;
         submitCall = submitCall.then(() =>
             axios
-                .post(`${baseUrl}/${boardId}/${listId}/${cardId}/${checklistId}/add-checklist-item`, { text })
+                .post(`${Routes.CARD}/${boardId}/${listId}/${cardId}/${checklistId}/add-checklist-item`, { text })
                 .then((res) => {
                     response = res;
                 })
@@ -447,7 +450,7 @@ export const checklistItemAdd = async (
             })
         );
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -466,13 +469,13 @@ export const checklistItemCompletedSet = async (
 
         submitCall = submitCall.then(() =>
             axios.put(
-                `${baseUrl}/${boardId}/${listId}/${cardId}/${checklistId}/${checklistItemId}/set-checklist-item-completed`,
+                `${Routes.CARD}/${boardId}/${listId}/${cardId}/${checklistId}/${checklistItemId}/set-checklist-item-completed`,
                 { completed }
             )
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -491,13 +494,13 @@ export const checklistItemTextSet = async (
 
         submitCall = submitCall.then(() =>
             axios.put(
-                `${baseUrl}/${boardId}/${listId}/${cardId}/${checklistId}/${checklistItemId}/set-checklist-item-text`,
+                `${Routes.CARD}/${boardId}/${listId}/${cardId}/${checklistId}/${checklistItemId}/set-checklist-item-text`,
                 { text }
             )
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -515,12 +518,12 @@ export const checklistItemDelete = async (
 
         submitCall = submitCall.then(() =>
             axios.delete(
-                `${baseUrl}/${boardId}/${listId}/${cardId}/${checklistId}/${checklistItemId}/delete-checklist-item`
+                `${Routes.CARD}/${boardId}/${listId}/${cardId}/${checklistId}/${checklistItemId}/delete-checklist-item`
             )
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 export const startDueDatesUpdate = async (
@@ -537,7 +540,7 @@ export const startDueDatesUpdate = async (
         dispatch(updateStartDueDatesOfCard({ listId, cardId, startDate, dueDate, dueTime }));
 
         submitCall = submitCall.then(() =>
-            axios.put(`${baseUrl}/${boardId}/${listId}/${cardId}/update-dates`, {
+            axios.put(`${Routes.CARD}/${boardId}/${listId}/${cardId}/update-dates`, {
                 startDate,
                 dueDate,
                 dueTime,
@@ -545,7 +548,7 @@ export const startDueDatesUpdate = async (
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -561,11 +564,11 @@ export const dateCompletedUpdate = async (
         dispatch(updateDateCompletedOfCard({ listId, cardId, completed }));
 
         submitCall = submitCall.then(() =>
-            axios.put(`${baseUrl}/${boardId}/${listId}/${cardId}/update-date-completed`, { completed })
+            axios.put(`${Routes.CARD}/${boardId}/${listId}/${cardId}/update-date-completed`, { completed })
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -584,7 +587,7 @@ export const attachmentAdd = async (
         let response: any;
         submitCall = submitCall.then(() =>
             axios
-                .post(`${baseUrl}/${boardId}/${listId}/${cardId}/add-attachment`, { link, name })
+                .post(`${Routes.CARD}/${boardId}/${listId}/${cardId}/add-attachment`, { link, name })
                 .then((res) => {
                     response = res;
                 })
@@ -603,7 +606,7 @@ export const attachmentAdd = async (
             })
         );
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -619,11 +622,11 @@ export const attachmentDelete = async (
         dispatch(deleteAttachmentOfCard({ listId, cardId, attachmentId }));
 
         submitCall = submitCall.then(() =>
-            axios.delete(`${baseUrl}/${boardId}/${listId}/${cardId}/${attachmentId}/delete-attachment`)
+            axios.delete(`${Routes.CARD}/${boardId}/${listId}/${cardId}/${attachmentId}/delete-attachment`)
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -640,14 +643,14 @@ export const attachmentUpdate = async (
         dispatch(updateAttachment({ attachmentId, link, name }));
 
         submitCall = submitCall.then(() =>
-            axios.put(`${baseUrl}/${boardId}/${listId}/${cardId}/${attachmentId}/update-attachment`, {
+            axios.put(`${Routes.CARD}/${boardId}/${listId}/${cardId}/${attachmentId}/update-attachment`, {
                 link,
                 name,
             })
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };
 
@@ -664,13 +667,13 @@ export const coverUpdate = async (
         dispatch(updateCoverOfCard({ listId, cardId, color, isSizeOne }));
 
         submitCall = submitCall.then(() =>
-            axios.put(`${baseUrl}/${boardId}/${listId}/${cardId}/update-cover`, {
+            axios.put(`${Routes.CARD}/${boardId}/${listId}/${cardId}/update-cover`, {
                 color,
                 isSizeOne,
             })
         );
         await submitCall;
     } catch (error: any) {
-        dispatch(openAlert({ message: error?.response?.data?.errMessage ?? error.message, severity: 'error' }));
+        dispatch(openAlert({ message: error?.response?.data?.message ?? error.message, severity: 'error' }));
     }
 };

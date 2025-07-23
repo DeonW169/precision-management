@@ -2,8 +2,7 @@ import axios from 'axios';
 import { updateCardDragDrop, updateListDragDrop } from '../redux/slices/listSlice';
 import { openAlert } from '../redux/slices/alertSlice';
 import { AppDispatch } from '../redux/store';
-
-const baseUrl = 'http://localhost:3001/list';
+import { Routes } from '../api/routes';
 
 let submitCall: Promise<any> = Promise.resolve();
 
@@ -14,7 +13,7 @@ interface UpdateCardOrderProps {
     sourceIndex: number;
     destinationIndex: number;
     cardId: string;
-    allLists: any[]; // optionally replace `any` with a typed List interface
+    allLists: any[];
 }
 
 interface UpdateListOrderProps {
@@ -22,7 +21,7 @@ interface UpdateListOrderProps {
     sourceIndex: number;
     destinationIndex: number;
     listId: string;
-    allLists: any[]; // optionally replace `any` with a typed List interface
+    allLists: any[];
 }
 
 export const updateCardOrder = async (
@@ -62,7 +61,7 @@ export const updateCardOrder = async (
     await dispatch(updateCardDragDrop(tempList));
 
     submitCall = submitCall.then(() =>
-        axios.post(`${baseUrl}/change-card-order`, {
+        axios.post(`${Routes.LIST}/change-card-order`, {
             boardId: props.boardId,
             sourceId: props.sourceId,
             destinationId: props.destinationId,
@@ -77,7 +76,7 @@ export const updateCardOrder = async (
         await dispatch(updateCardDragDrop(savedList));
         dispatch(
             openAlert({
-                message: error?.response?.data?.errMessage || error.message,
+                message: error?.response?.data?.message || error.message,
                 severity: 'error',
             })
         );
@@ -98,7 +97,7 @@ export const updateListOrder = async (
     await dispatch(updateListDragDrop(tempList));
 
     submitCall = submitCall.then(() =>
-        axios.post(`${baseUrl}/change-list-order`, {
+        axios.post(`${Routes.LIST}/change-list-order`, {
             boardId: props.boardId,
             sourceIndex: props.sourceIndex,
             destinationIndex: props.destinationIndex,
@@ -112,7 +111,7 @@ export const updateListOrder = async (
         await dispatch(updateCardDragDrop(savedOrder));
         dispatch(
             openAlert({
-                message: error?.response?.data?.errMessage || error.message,
+                message: error?.response?.data?.message || error.message,
                 severity: 'error',
             })
         );

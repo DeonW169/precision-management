@@ -4,6 +4,7 @@ import { Container, Btn } from "./styled";
 interface BottomButtonGroupProps {
   handleClose: () => void;
   handleSubmit: () => void;
+  title?: string;
   isDisabled?: boolean;
   cancelText?: string;
   submitText?: string;
@@ -15,14 +16,15 @@ const BottomButtonGroup: React.FC<BottomButtonGroupProps> = ({
   isDisabled = false,
   cancelText = "Cancel",
   submitText = "Submit",
+  title = "btn"
 }) => {
   return (
     <Container>
       <Btn type="button" onClick={handleClose}>
-        {cancelText}
+        {cancelText || title}
       </Btn>
       <Btn type="submit" onClick={handleSubmit} disabled={isDisabled}>
-        {submitText}
+        {submitText || title}
       </Btn>
     </Container>
   );

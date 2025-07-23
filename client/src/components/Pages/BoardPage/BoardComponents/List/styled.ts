@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { sm } from "../../../../BreakPoints";
+import { sm } from "../../../../../Breakpoints";
 
 export const ListContainer = styled.div`
   min-width: 17rem;

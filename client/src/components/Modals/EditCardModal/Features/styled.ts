@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { xs } from '../../../../BreakPoints';
+// import { xs } from '../../../../BreakPoints';
 
 export const Container = styled.div`
 	padding-left: 3.5rem;
@@ -9,9 +9,26 @@ export const Container = styled.div`
 	justify-content: flex-start;
 	gap: 1rem;
 	flex-wrap: wrap;
-	${xs(css`
-		padding-left: 1rem;
-	`)};
+`;
+
+export const Text = styled.p`
+	margin: 0;
+	padding: 0;
+	font-size: 0.875rem;
+	overflow-x:hidden;
+	word-break: break-all;
+`;
+
+export const Icon = styled.img`
+  margin-left: 1rem;
+`;
+
+export const Box = styled.div`
+	height: 3rem;
+	width: 8rem;
+	padding: 0.5rem 3rem;
+	margin-right:auto;
+	margin-left:auto;
 `;
 
 export const FeatureContainer = styled.div`
@@ -61,8 +78,8 @@ export const AddAvatar = styled(Avatar)`
 `;
 
 interface LabelProps {
-    color: string;
-    hoverColor?: string;
+	color: string;
+	hoverColor?: string;
 }
 
 export const Label = styled.div<LabelProps>`
@@ -109,14 +126,10 @@ export const DateDropDown = styled.div`
 	&:hover {
 		background-color: rgba(0, 0, 0, 0.1);
 	}
-	${xs(css`
-		text-align: center;
-		width: 90%;
-	`)};
 `;
 
 interface CompleteLabelProps {
-    show?: boolean;
+	show?: boolean;
 }
 
 export const CompleteLabel = styled.div<CompleteLabelProps>`

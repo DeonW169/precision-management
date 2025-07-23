@@ -30,7 +30,7 @@ const List: React.FC<ListProps> = ({ list }) => {
           <Title>{list.title}</Title>
           <CardsContainer>
             {list.cards.map((card, index) => (
-              <Card key={card._id} card={card} index={index} />
+              <Card key={card._id} index={index} title={""} cardId={""} listId={""} boardId={""} labels={[]} members={[]} />
             ))}
             {provided.placeholder}
           </CardsContainer>

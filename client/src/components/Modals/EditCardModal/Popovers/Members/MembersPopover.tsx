@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import DoneIcon from "@mui/icons-material/Done";
 import { useDispatch, useSelector } from "react-redux";
-import { memberAdd, memberDelete } from "../../../../../Services/cardService";
+import { memberAdd, memberDelete } from "../../../../../services/cardService";
 import { Avatar } from "@mui/material";
-import { RootState } from "../../../../../Redux/store"; // Adjust path based on your structure
+import { RootState } from "../../../../../redux/store";
 
 const Container = styled.div`
   width: 100%;

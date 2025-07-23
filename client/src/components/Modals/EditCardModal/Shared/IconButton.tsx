@@ -2,14 +2,16 @@ import React from "react";
 import { IconButtonContainer } from "./styled";
 
 interface IconButtonProps {
-  children: React.ReactNode;
+  // children: React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   className?: string;
+  title?: string;
+  icon?: any;
   disabled?: boolean;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
-  children,
+  title,
   onClick,
   className,
   disabled = false,
@@ -20,7 +22,7 @@ const IconButton: React.FC<IconButtonProps> = ({
       className={className}
       disabled={disabled}
     >
-      {children}
+      {title}
     </IconButtonContainer>
   );
 };

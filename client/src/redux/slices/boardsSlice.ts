@@ -1,14 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Board {
-    _id?: string;
-    title?: string;
-    backgroundImageLink?: string;
-    [key: string]: any;
-}
+import { createSlice } from '@reduxjs/toolkit';
+import { Board } from './board/boardTypes';
+import * as reducers from './boards/boardsReducers';
 
 interface BoardsState {
-    boardsData: Board[] | Record<string, any>; // depends on actual usage
+    boardsData: Board[] | Record<string, any>;
     pending: boolean;
     backgroundImages: string[];
     smallPostfix: string;
@@ -38,29 +33,8 @@ export const boardsSlice = createSlice({
     name: 'boards',
     initialState,
     reducers: {
-        startFetchingBoards: (state: any) => {
-            state.pending = true;
-        },
-        successFetchingBoards: (state: any, action: PayloadAction<{ boards: Board[] }>) => {
-            state.boardsData = action.payload.boards;
-            state.pending = false;
-        },
-        failFetchingBoards: (state: any) => {
-            state.pending = false;
-        },
-        startCreatingBoard: (state: any) => {
-            state.creating = true;
-        },
-        successCreatingBoard: (state: any, action: PayloadAction<Board>) => {
-            if (Array.isArray(state.boardsData)) {
-                state.boardsData.push(action.payload);
-            }
-            state.creating = false;
-        },
-        failCreatingBoard: (state: any) => {
-            state.creating = false;
-        },
-        reset: () => initialState,
+        ...reducers,
+        reset: () => initialState
     },
 });
 

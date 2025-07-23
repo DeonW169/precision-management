@@ -7,7 +7,7 @@ import {
   CloseIcon,
 } from "./styled";
 import { RxCross2 } from "react-icons/rx";
-import { closePopover } from "../../../Redux/Slices/boardSlice";
+// import { closePopover } from "../../../../redux/slices/boardSlice";
 
 interface BasePopoverProps {
   children: React.ReactNode;
@@ -15,6 +15,10 @@ interface BasePopoverProps {
   right?: string;
   width?: string;
   zIndex?: number;
+  anchorElement: HTMLElement | null;
+  closeCallback: () => void;
+  title: string;
+  contents: React.ReactElement;
 }
 
 const BasePopover: React.FC<BasePopoverProps> = ({
@@ -23,6 +27,10 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   right,
   width,
   zIndex,
+  anchorElement,
+  closeCallback,
+  title,
+  contents,
 }) => {
   const popoverRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
@@ -33,7 +41,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
         popoverRef.current &&
         !popoverRef.current.contains(e.target as Node)
       ) {
-        dispatch(closePopover());
+        // dispatch(closePopover());
       }
     };
 
@@ -46,12 +54,12 @@ const BasePopover: React.FC<BasePopoverProps> = ({
       <OverlayBackground />
       <PopoverContent
         ref={popoverRef}
-        top={top}
-        right={right}
-        width={width}
-        zIndex={zIndex}
+        // top={top}
+        // right={right}
+        // width={width}
+        // zIndex={zIndex}
       >
-        <CloseIcon onClick={() => dispatch(closePopover())}>
+        <CloseIcon >
           <RxCross2 />
         </CloseIcon>
         {children}

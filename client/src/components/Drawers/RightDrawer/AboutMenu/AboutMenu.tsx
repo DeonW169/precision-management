@@ -16,11 +16,11 @@ import {
 } from "./styled";
 import MemberIcon from "@mui/icons-material/PersonOutlineOutlined";
 import DescriptionIcon from "@mui/icons-material/TextSnippetOutlined";
-import BottomButtonGroup from "../../../Pages/BoardPage/BoardComponents/BottomButtonGroup/BottomButtonGroup";
-import { boardDescriptionUpdate } from "../../../../Services/boardService";
+import { boardDescriptionUpdate } from "../../../../services/boardService";
 import { Avatar } from "@mui/material";
-import { AppDispatch, RootState } from "../../../../Redux/store"; // adjust based on your store location
-import { BoardState, Member } from "../../../../Types/boardTypes"; // create these interfaces as needed
+import { AppDispatch, RootState } from "../../../../redux/store";
+import { BoardState, Member } from "../../../../redux/slices/board/boardTypes";
+import BottomButtonGroup from "../../../Pages/BoardPage/BoardComponents/BottomButtonGroup/BottomButtonGroup";
 
 const AboutMenu: React.FC = () => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -110,15 +110,15 @@ const AboutMenu: React.FC = () => {
             onChange={onChangeHandler}
             value={description}
             onFocus={() => setTextareaFocus(true)}
-            textHeight={hiddenTextRef.current?.scrollHeight ?? "1rem"}
-            focused={textareaFocus}
+            // textHeight={hiddenTextRef.current?.scrollHeight ?? "1rem"}
+            // focused={textareaFocus}
             placeholder="It’s your board’s time to shine! Let people know what this board is used for and what they can expect to see."
           />
           {textareaFocus && (
             <BottomButtonGroup
               title="Save"
-              clickCallback={handleSaveClick}
-              closeCallback={() => setTextareaFocus(false)}
+              handleSubmit={handleSaveClick}
+              handleClose={() => setTextareaFocus(false)}
             />
           )}
         </DescriptionSectionContainer>

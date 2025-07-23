@@ -7,8 +7,8 @@ import {
   BlueButton,
 } from "../Labels/styled";
 import { useDispatch, useSelector } from "react-redux";
-import { checklistCreate } from "../../../../../Services/cardService";
-import { RootState, AppDispatch } from "../../../../../Redux/store";
+import { checklistCreate } from "../../../../../services/cardService";
+import { RootState, AppDispatch } from "../../../../../redux/store";
 
 interface ChecklistPopoverProps {
   closeCallback: () => void;

@@ -8,7 +8,7 @@ interface ProgressbarProps {
 const Progressbar: React.FC<ProgressbarProps> = ({ progress }) => {
   return (
     <ProgressContainer>
-      <ProgressFiller style={{ width: `${progress}%` }} />
+      <ProgressFiller percentage={progress} />
     </ProgressContainer>
   );
 };

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { SearchArea, Title } from "../Labels/styled";
-import Button from "../../ReUsableComponents/Button";
+import Button from "../../Shared/Button";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { attachmentAdd } from "../../../../../Services/cardService";
-import { RootState } from "../../../../../Redux/store";
+import { attachmentAdd } from "../../../../../services/cardService";
+import { RootState } from "../../../../../redux/store";
 
 const Container = styled.div`
   display: flex;
@@ -56,8 +56,7 @@ const AddAttachmentPopover: React.FC = () => {
       <Button
         style={{ marginTop: "1rem" }}
         title="Attach"
-        clickCallback={handleAttachClick}
-      />
+        onClick={handleAttachClick} children={undefined}      />
     </Container>
   );
 };

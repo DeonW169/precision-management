@@ -1,10 +1,10 @@
 import React from "react";
 import { Container, Title } from "./styled";
-import Button from "../ReUsableComponents/IconButton";
+import IconButton from "../Shared/IconButton";
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useDispatch, useSelector } from "react-redux";
-import { cardDelete } from "../../../../Services/listService";
-import { RootState } from "../../../../Redux/store"; // Adjust the import path to your store setup
+import { cardDelete } from "../../../../services/listService";
+import { RootState } from "../../../../redux/store";
 
 const Actions: React.FC = () => {
   const card = useSelector((state: RootState) => state.card);
@@ -13,8 +13,8 @@ const Actions: React.FC = () => {
   return (
     <Container>
       <Title>Actions</Title>
-      <Button
-        clickCallback={() => {
+      <IconButton
+        onClick={(card: any) => {
           cardDelete(card.listId, card.boardId, card.cardId, dispatch);
         }}
         title="Delete"

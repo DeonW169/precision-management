@@ -10,10 +10,10 @@ import {
 import axios from "axios";
 import Skeleton from "@mui/material/Skeleton";
 import { useDispatch, useSelector } from "react-redux";
-import { boardBackgroundUpdate } from "../../../../Services/boardService";
-import { RootState } from "../../../../Redux/store"; // Adjust path to your store definition
+import { boardBackgroundUpdate } from "../../../../services/boardService";
+import { RootState } from "../../../../redux/store";
 
-type Props = {
+interface Props {
   sectionName: string;
   menuCallback: (section: string) => void;
 };
@@ -64,20 +64,20 @@ const PhotosMenu: React.FC<Props & { dispatch: any; boardId: string }> = ({
 
   return (
     <PhotosContainer>
-      {images.length > 0
-        ? images.map((image) => (
-            <PhotosWrapper
-              key={image.id}
-              onClick={() => handleClick(image.urls.full)}
-            >
-              <Image key={image.id} link={image.urls.small} />
-            </PhotosWrapper>
-          ))
-        : [...Array(18).keys()].map((_, i) => (
-            <PhotosWrapper key={i}>
-              <Skeleton variant="rectangular" width="100%" height="6rem" />
-            </PhotosWrapper>
-          ))}
+      {images.length > 0 ? (
+        images.map((image) => (
+          <PhotosWrapper
+            key={image.id}
+            onClick={() => handleClick(image.urls.full)}
+          >
+            <Image key={image.id} link={image.urls.small} />
+          </PhotosWrapper>
+        ))
+      ) : (
+        <PhotosWrapper>
+          <Skeleton variant="rectangular" width="100%" height="6rem" />
+        </PhotosWrapper>
+      )}
     </PhotosContainer>
   );
 };

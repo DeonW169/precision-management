@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { sm, xs } from '../../../BreakPoints';
+import { sm, xs } from '../../../Breakpoints';
 
 interface CoverContainerProps {
   color?: string;

@@ -10,9 +10,9 @@ import {
 import {
   updateDescription,
   updateDescriptionOfCard,
-} from "../../../Redux/Slices/cardSlice";
-import { openAlert } from "../../../Redux/Slices/alertSlice";
-import { RootState } from "../../../Redux/store";
+} from "../../../../redux/slices/cardSlice";
+import { openAlert } from "../../../../redux/slices/alertSlice";
+import { RootState } from "../../../../redux/store";
 import axios from "axios";
 
 interface Props {
@@ -35,7 +35,8 @@ const Description: React.FC<Props> = ({
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useDispatch();
 
-  const token = useSelector((state: RootState) => state.user.token);
+  // const token = useSelector((state: RootState) => state.user.token);
+  const token = "";
 
   useEffect(() => {
     if (isInputVisible && textAreaRef.current) {

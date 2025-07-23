@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import DropdownMenu from "./DropdownMenu";
 import SearchBar from "./SearchBar";
-import { xs } from "../BreakPoints";
+import { xs } from "../Breakpoints";
 import ProfileBox from "./ProfileBox";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   height: 3rem;
@@ -75,14 +75,14 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ searchString, setSearchString }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <Container>
       <LeftSide>
         <LogoContainer>
           <TrelloLogo
-            onClick={() => history.push("/boards")}
+            onClick={() => navigate("/boards")}
             src="https://a.trellocdn.com/prgb/dist/images/header-logo-spirit-loading.87e1af770a49ce8e84e3.gif"
             alt="Trello Logo"
           />

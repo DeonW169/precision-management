@@ -8,9 +8,9 @@ import {
   Link,
 } from "./styled";
 import TitleIcon from "@mui/icons-material/ChromeReaderMode";
-import { titleUpdate } from "../../../../Services/cardService";
+import { titleUpdate } from "../../../../services/cardService";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../../Redux/store";
+import { AppDispatch, RootState } from "../../../../redux/store";
 
 const Title: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -8,17 +8,18 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../redux/slices/userSlice";
+// import { logout } from "../redux/slices/userSlice";
 import { reset } from "../redux/slices/boardsSlice";
-import { RootState } from "../redux/store"; // Update path if needed
+import { RootState } from "../redux/store";
 
 const ProfileBox: React.FC = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
 
-  const name = useSelector((state: RootState) => state.user.userInfo.name);
-  const color = useSelector((state: RootState) => state.user.userInfo.color);
+  // const name = useSelector((state: RootState) => state.user.userInfo.name);
+  // const color = useSelector((state: RootState) => state.user.userInfo.color);
+  const name = "deon";
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -37,7 +38,7 @@ const ProfileBox: React.FC = () => {
               sx={{
                 width: 32,
                 height: 32,
-                bgcolor: color,
+                // bgcolor: color,
                 fontSize: "0.875rem",
                 fontWeight: 800,
               }}
@@ -84,7 +85,7 @@ const ProfileBox: React.FC = () => {
         <MenuItem
           onClick={() => {
             dispatch(reset());
-            dispatch(logout());
+            // dispatch(logout());
           }}
         >
           <ListItemIcon>

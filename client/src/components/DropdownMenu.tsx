@@ -6,10 +6,10 @@ import { styled as muiStyled } from "@mui/material/styles";
 import DownIcon from "@mui/icons-material/KeyboardArrowDown";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getBoards } from "../services/boardsService";
-import CardLoadingSvg from "../Images/cardLoading.svg";
-import { RootState } from "../redux/store"; // Adjust if you have a different store file
+import CardLoadingSvg from "../images/cardLoading.svg";
+import { RootState } from "../redux/store";
 
 interface DropdownMenuProps {
   title: string;
@@ -58,7 +58,7 @@ const StyledIcon = muiStyled(DownIcon)({
 const DropdownMenu: React.FC<DropdownMenuProps> = ({ title }) => {
   const boardsData = useSelector((state: RootState) => state.boards.boardsData);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [loading, setLoading] = React.useState(false);
   const open = Boolean(anchorEl);
@@ -111,7 +111,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ title }) => {
                 key={item._id}
                 onClick={() => {
                   setAnchorEl(null);
-                  history.push("/board/" + item._id);
+                  navigate("/board/" + item._id);
                 }}
               >
                 <Span>{item.title}</Span>

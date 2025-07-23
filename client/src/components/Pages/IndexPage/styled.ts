@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { lg } from "../../BreakPoints";
+import { lg } from "../../../Breakpoints";
 
 export const Container = styled.nav`
   position: fixed;

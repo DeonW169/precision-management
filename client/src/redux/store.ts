@@ -1,22 +1,23 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './Slices/userSlice';
-import alertReducer from './Slices/alertSlice';
-import boardsReducer from './Slices/boardsSlice';
-import boardReducer from './Slices/boardSlice';
-import listReducer from './Slices/listSlice';
-import cardReducer from './Slices/cardSlice';
+// import userReducer from './slices/userSlice';
+import alertReducer from './slices/alertSlice';
+import boardsReducer from './slices/boardsSlice';
+import boardReducer from './slices/boardSlice';
+import listReducer from './slices/listSlice';
+import cardReducer from './slices/cardSlice';
+import drawerReducer from './slices/drawerSlice';
 
 export const store = configureStore({
     reducer: {
-        user: userReducer,
+        // user: userReducer,
         alert: alertReducer,
         boards: boardsReducer,
         board: boardReducer,
         list: listReducer,
         card: cardReducer,
+        drawer: drawerReducer,
     },
 });
 
-// 👇 Export RootState and AppDispatch for type-safe use in your app
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

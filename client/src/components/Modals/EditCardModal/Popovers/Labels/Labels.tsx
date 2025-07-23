@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../../ReUsableComponents/Button";
+import Button from "../../Shared/Button";
 import DoneIcon from "@mui/icons-material/Done";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import {
@@ -22,9 +22,9 @@ import {
   labelDelete,
   labelUpdate,
   labelUpdateSelection,
-} from "../../../../../Services/cardService";
-import { openAlert } from "../../../../../Redux/Slices/alertSlice";
-import { RootState } from "../../../../../Redux/store";
+} from "../../../../../services/cardService";
+import { openAlert } from "../../../../../redux/slices/alertSlice";
+import { RootState } from "../../../../../redux/store";
 
 interface LabelsPopoverProps {
   currentPage: "Labels" | "Create" | "Change";
@@ -157,6 +157,7 @@ const LabelsPopover: React.FC<LabelsPopoverProps> = ({
       <Title>Labels</Title>
       {thisCard.labels.map((label: Label) => (
         <LabelComponent
+          currentPage={"Labels"}
           key={label._id}
           {...label}
           arrowCallback={arrowCallback}
@@ -165,11 +166,12 @@ const LabelsPopover: React.FC<LabelsPopoverProps> = ({
       ))}
       <br />
       <Button
-        clickCallback={() => {
+        onClick={() => {
           arrowCallback(true);
           titleCallback("Create");
         }}
         title="Create a new label"
+        children={undefined}
       />
     </Container>
   );

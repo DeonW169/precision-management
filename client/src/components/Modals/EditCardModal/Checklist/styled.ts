@@ -69,3 +69,58 @@ export const AddButton = styled.button`
 		background-color: #0952cc;
 	}
 `;
+
+export const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const LeftColumn = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const RightColumn = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+export const Title = styled.div`
+  font-weight: 500;
+`;
+
+export const Percentage = styled.div`
+  margin-left: 8px;
+`;
+
+export const CheckText = styled.div`
+  font-size: 14px;
+  margin-left: 10px;
+`;
+
+export const RowRightButtonsWrapper = styled.div`
+  display: flex;
+  gap: 6px;
+`;
+
+export const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const TextAreaContainer = styled.div`
+  margin-top: 10px;
+`;
+
+export const TextArea = styled.textarea`
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  padding: 6px;
+  font-size: 14px;
+  resize: none;
+  outline: none;
+  background: #f4f5f7;
+`;

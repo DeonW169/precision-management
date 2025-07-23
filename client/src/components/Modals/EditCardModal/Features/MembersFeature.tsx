@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, Box } from "./styled";
 import AddIcon from "@mui/icons-material/Add";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../Redux/store";
+import { RootState } from "../../../../redux/store";
 
 interface MembersFeatureProps {
   handleOpenPopover: (type: string) => void;
@@ -11,11 +11,11 @@ interface MembersFeatureProps {
 const MembersFeature: React.FC<MembersFeatureProps> = ({
   handleOpenPopover,
 }) => {
-  const card = useSelector((state: RootState) => state.card.card);
+  const card = useSelector((state: RootState) => state.card);
 
   return (
     <Box>
-      {card.members?.map((item, index) => (
+      {card.members?.map((item: any, index: number) => (
         <Avatar key={index} style={{ backgroundColor: item.color }}>
           {item.name?.[0]?.toUpperCase()}
         </Avatar>

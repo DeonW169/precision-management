@@ -12,9 +12,9 @@ import {
   LinkContainer,
   Link,
 } from "./styled";
-import { commentDelete, commentUpdate } from "../../../../Services/cardService";
+import { commentDelete, commentUpdate } from "../../../../services/cardService";
 import { Avatar } from "@mui/material";
-import { RootState } from "../../../../Redux/store"; // adjust if your store is in a different location
+import { RootState } from "../../../../redux/store";
 
 interface CommentProps {
   _id: string;
@@ -26,7 +26,7 @@ interface CommentProps {
 const Comment: React.FC<CommentProps> = ({ _id, text, userName, color }) => {
   const [edit, setEdit] = useState(true);
   const [comment, setComment] = useState(text);
-  const user = useSelector((state: RootState) => state.user.userInfo);
+  // const user = useSelector((state: RootState) => state.user.userInfo);
   const card = useSelector((state: RootState) => state.card);
   const dispatch = useDispatch();
 
@@ -72,11 +72,12 @@ const Comment: React.FC<CommentProps> = ({ _id, text, userName, color }) => {
           <ButtonContainer show={!edit}>
             <BottomButtonGroup
               title="Save"
-              clickCallback={handleSaveClick}
-              closeCallback={() => setEdit(true)}
+              handleSubmit={handleSaveClick}
+              handleClose={() => setEdit(true)}
             />
           </ButtonContainer>
-          <LinkContainer show={edit && user.name === userName}>
+          {/* <LinkContainer show={edit && user.name === userName}> */}
+          <LinkContainer show={edit}>
             <Link onClick={() => setEdit(false)}>Edit</Link>
             <Link onClick={handleDeleteClick}>Delete</Link>
           </LinkContainer>

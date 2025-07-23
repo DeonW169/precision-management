@@ -6,14 +6,16 @@ import FormatColorFillOutlinedIcon from "@mui/icons-material/FormatColorFillOutl
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import { useDispatch, useSelector } from "react-redux";
-import { openDrawer } from "../../../Redux/Slices/drawerSlice";
-import { AppDispatch, RootState } from "../../../Redux/store";
+import { openDrawer } from "../../../../redux/slices/drawerSlice";
+import { AppDispatch, RootState } from "../../../../redux/store";
 
-const MainMenu: React.FC = () => {
+interface MainMenuProps {
+  menuCallback?: (section: "About this board" | "Change background" | "Menu") => void;
+}
+
+const MainMenu: React.FC<MainMenuProps> = ({ menuCallback }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const cardSelected = useSelector(
-    (state: RootState) => state.card.cardSelected
-  );
+  const cardSelected = useSelector((state: RootState) => state.card.selected);
 
   const handleOpenDrawer = (type: string) => {
     dispatch(openDrawer(type));
@@ -39,7 +41,7 @@ const MainMenu: React.FC = () => {
         title="Copy"
         description="Create a copy of this card."
       />
-      <MenuButton
+      {/* <MenuButton
         clickCallback={() => handleOpenDrawer("archive")}
         icon={<ArchiveOutlinedIcon />}
         title={cardSelected?.archived ? "Send to board" : "Archive"}
@@ -48,7 +50,7 @@ const MainMenu: React.FC = () => {
             ? "Move the card back to the board."
             : "Archive this card."
         }
-      />
+      /> */}
     </MainContainer>
   );
 };

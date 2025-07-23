@@ -2,7 +2,7 @@ import { Avatar } from "@mui/material";
 import moment from "moment";
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../Redux/store";
+import { RootState } from "../../../../redux/store";
 import {
   Container,
   LeftContainer,
@@ -25,7 +25,7 @@ const ActivityLog: React.FC = () => {
 
   return (
     <>
-      {card.activities.map((activity: Activity, index: number) => {
+      {card.activities.map((activity: any, index: number) => {
         if (!activity.isComment)
           return (
             <Container key={index}>

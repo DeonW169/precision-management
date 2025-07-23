@@ -121,7 +121,23 @@
 // }
 
 import React from "react";
-import styled from "./styled";
+import {
+  Wrapper,
+  CoverContainer,
+  MainContainer,
+  TitleContainer,
+  FeaturesContainer,
+  DescriptionContainer,
+  ChecklistContainer,
+  ActivityContainer,
+  RightContainer,
+  AddToCardContainer,
+  ActionsContainer,
+  LoadingScreen,
+  AttachmentContainer,
+  CoverButtonWrapper,
+  CloseIconWrapper,
+} from "./styled";
 import Title from "./Title/Title";
 import Description from "./Description/Description";
 import Comment from "./Comment/Comment";
@@ -134,47 +150,65 @@ import Actions from "./Actions/Actions";
 interface EditCardProps {
   cardId: string;
   listId: string;
+  boardId: string;
   close: () => void;
 }
 
-const Container = styled.Container;
-const Main = styled.Main;
-const Side = styled.Side;
-const Content = styled.Content;
-const Section = styled.Section;
+// const Container = styled.Container;
+// const Main = styled.Main;
+// const Side = styled.Side;
+// const Content = styled.Content;
+// const Section = styled.Section;
 
-const EditCard: React.FC<EditCardProps> = ({ cardId, listId, close }) => {
+const EditCard: React.FC<EditCardProps> = ({
+  cardId,
+  listId,
+  boardId,
+  close,
+}) => {
   return (
-    <Container>
-      <Title cardId={cardId} listId={listId} />
-      <Content>
-        <Main>
-          <Section>
-            <Description cardId={cardId} listId={listId} />
-          </Section>
-          <Section>
-            <Comment cardId={cardId} listId={listId} />
-          </Section>
-          <Section>
-            <Checklist cardId={cardId} listId={listId} />
-          </Section>
-          <Section>
-            <Attachments cardId={cardId} listId={listId} />
-          </Section>
-          <Section>
-            <ActivityLog cardId={cardId} listId={listId} />
-          </Section>
-        </Main>
-        <Side>
-          <Section>
-            <AddToCard cardId={cardId} listId={listId} />
-          </Section>
-          <Section>
-            <Actions cardId={cardId} listId={listId} close={close} />
-          </Section>
-        </Side>
-      </Content>
-    </Container>
+    <Wrapper>
+      {/* <Title cardId={cardId} listId={listId} /> */}
+      <Title />
+      <CoverContainer>
+        <MainContainer>
+          <ActionsContainer>
+            <Description
+              cardId={cardId}
+              listId={listId}
+              boardId={boardId}
+              description={""}
+            />
+          </ActionsContainer>
+          <ActionsContainer>
+            {/* <Comment cardId={cardId} listId={listId} /> */}
+            <Comment _id={""} text={""} userName={""} color={""} />
+          </ActionsContainer>
+          <ActionsContainer>
+            {/* <Checklist cardId={cardId} listId={listId} /> */}
+            <Checklist _id={""} title={""} items={[]} />
+          </ActionsContainer>
+          <ActionsContainer>
+            {/* <Attachments cardId={cardId} listId={listId} /> */}
+            <Attachments attachments={[]} />
+          </ActionsContainer>
+          <ActionsContainer>
+            {/* <ActivityLog cardId={cardId} listId={listId} /> */}
+            <ActivityLog />
+          </ActionsContainer>
+        </MainContainer>
+        <RightContainer>
+          <ActionsContainer>
+            {/* <AddToCard cardId={cardId} listId={listId} /> */}
+            <AddToCard />
+          </ActionsContainer>
+          <ActionsContainer>
+            {/* <Actions cardId={cardId} listId={listId} close={close} /> */}
+            <Actions />
+          </ActionsContainer>
+        </RightContainer>
+      </CoverContainer>
+    </Wrapper>
   );
 };
 

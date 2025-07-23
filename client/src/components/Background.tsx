@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import LeftImage from "../Images/trello-left.svg";
-import RightImage from "../Images/trello-right.svg";
+import LeftImage from "../images/trello-left.svg";
+import RightImage from "../images/trello-right.svg";
 
-// Styled components
 const Container = styled.div`
   background-color: #f9fafc;
   height: 100vh;

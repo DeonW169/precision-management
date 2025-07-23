@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { sm, xs } from "../BreakPoints";
-import SearchIcon from "../Images/search-icon.svg";
+import { sm, xs } from "../Breakpoints";
+import SearchIcon from "../images/search-icon.svg";
 
 interface Props {
   searchString: string;

@@ -17,7 +17,6 @@ import {
 } from "./styled";
 import moment from "moment";
 import { activityUpdate } from "../../../../../services/boardService";
-import CardLoadingSvg from "../../../../../images/cardLoading.svg";
 import { RootState } from "../../../../../redux/store";
 
 interface Activity {
@@ -104,17 +103,19 @@ const ActivitySection: FC = () => {
         <HeadTitle>Activity</HeadTitle>
       </HeadWrapper>
       <Wrapper>
-        {board.activityLoading ? (
-          <LoadingBox image={CardLoadingSvg} />
-        ) : (
-          board.activity.map((act: Activity) =>
-            act.actionType === "action" ? (
-              <Action key={act._id} {...act} />
-            ) : (
-              <Comment key={act._id} {...act} />
-            )
-          )
-        )}
+        <>
+          {board.activityLoading ? (
+            <LoadingBox />
+          ) : (
+            board?.activity.map((act: any) => {
+              act.actionType === "action" ? (
+                <Action key={act._id} {...act} />
+              ) : (
+                <Comment key={act._id} {...act} />
+              );
+            })
+          )}
+        </>
       </Wrapper>
     </Container>
   );

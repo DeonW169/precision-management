@@ -66,3 +66,48 @@ export const InputLabel = styled.label`
 	font-size: 0.875rem;
 	color: #5e6c84;
 `;
+
+export const Wrapper = styled.div`
+  display: flex;
+  width: 25.25rem;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
+`;
+
+export const PhotosCard = styled.div`
+  width: 100%;
+  min-height: 96px;
+  max-width: 18.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+`;
+
+export const CreateButton = styled.button`
+  width: 35%;
+  font-weight: 500;
+  padding: 0.4rem;
+  border: none;
+  border-radius: 0.25rem;
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background-color: #2099df;
+  transition: 100ms linear;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+  &:hover {
+    background-color: #1089cf;
+  }
+  &:active {
+    background-color: #0079bf;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    background-color: rgba(128, 128, 128, 1);
+    color: rgba(200, 200, 200, 0.5);
+  }
+`;

@@ -50,8 +50,10 @@ const RightDrawer: React.FC<RightDrawerProps> = ({
           <AboutMenu />
         ) : (
           <BackgroundMenu
-            menuCallback={setSectionName}
             sectionName={sectionName}
+            menuCallback={function (section: string): void {
+              setSectionName
+            }}
           />
         )
       }

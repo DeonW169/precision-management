@@ -14,9 +14,9 @@ import {
 } from "./styled";
 import CheckIcon from "@mui/icons-material/LibraryAddCheckOutlined";
 import BottomButtonGroup from "../../../Pages/BoardPage/BoardComponents/BottomButtonGroup/BottomButtonGroup";
-import Checkbox from "../ReUsableComponents/Checkbox";
-import Button from "../ReUsableComponents/Button";
-import Progressbar from "../ReUsableComponents/Progressbar";
+import Checkbox from "../Shared/Checkbox";
+import Button from "../Shared/Button";
+import Progressbar from "../Shared/Progressbar";
 import { useDispatch, useSelector } from "react-redux";
 import {
   checklistDelete,
@@ -24,9 +24,9 @@ import {
   checklistItemCompletedSet,
   checklistItemDelete,
   checklistItemTextSet,
-} from "../../../../Services/cardService";
+} from "../../../../services/cardService";
 import DeleteIcon from "@mui/icons-material/DeleteForeverOutlined";
-import { AppDispatch, RootState } from "../../../../Redux/store";
+import { AppDispatch, RootState } from "../../../../redux/store";
 
 interface ChecklistItemType {
   _id: string;
@@ -121,30 +121,31 @@ const Checklist: React.FC<ChecklistProps> = ({ _id, title, items }) => {
     };
 
     return (
-      <Row showHover={true}>
+      // <Row showHover={true}>
+      <Row>
         <LeftColumn>
-          <Checkbox checked={checked} clickCallback={handleCompletedChange} />
+          <Checkbox checked={checked} onChange={handleCompletedChange} />
         </LeftColumn>
         <RightColumn>
           {showEdit ? (
             <TextAreaContainer>
               <TextArea
                 value={editedText}
-                onChange={(e) => setEditedText(e.target.value)}
+                onChange={(e: any) => setEditedText(e.target.value)}
               />
               <BottomButtonGroup
                 title="Save"
-                clickCallback={handleTextChange}
-                closeCallback={() => {
-                  setShowEdit(false);
+                // clickCallback={handleTextChange}
+                handleSubmit={() => setShowEdit(false)}
+                handleClose={function (): void {
+                  throw new Error("Function not implemented.");
                 }}
               />
             </TextAreaContainer>
           ) : (
             <>
-              <CheckText onClick={() => setShowEdit(true)} isChecked={checked}>
-                {text}
-              </CheckText>
+              {/* <CheckText onClick={() => setShowEdit(true)} isChecked={checked}> */}
+              <CheckText onClick={() => setShowEdit(true)}>{text}</CheckText>
               <IconWrapper onClick={handleChecklistItemDeleteClick}>
                 <DeleteIcon fontSize="small" />
               </IconWrapper>
@@ -161,16 +162,19 @@ const Checklist: React.FC<ChecklistProps> = ({ _id, title, items }) => {
         <LeftColumn>
           <CheckIcon fontSize="small" />
         </LeftColumn>
-        <RightColumn makeColumn={true}>
+        {/* <RightColumn makeColumn={true}> */}
+        <RightColumn>
           <Title>{title}</Title>
           <RowRightButtonsWrapper>
             <Button
-              clickCallback={() => setHideItems((prev) => !prev)}
-              title={hideItems ? "Show checkeds" : "Hide checkeds"}
+              onClick={() => setHideItems((prev) => !prev)}
+              title={hideItems ? "Show checked" : "Hide checked"}
+              children={undefined}
             />
             <Button
-              clickCallback={() => handleChecklistDelete(_id)}
+              onClick={() => handleChecklistDelete(_id)}
               title="Delete"
+              children={undefined}
             />
           </RowRightButtonsWrapper>
         </RightColumn>
@@ -180,7 +184,7 @@ const Checklist: React.FC<ChecklistProps> = ({ _id, title, items }) => {
           <Percentage>{percentage()}%</Percentage>
         </LeftColumn>
         <RightColumn>
-          <Progressbar value={percentage()} />
+          <Progressbar progress={percentage()} />
         </RightColumn>
       </Row>
 
@@ -202,14 +206,15 @@ const Checklist: React.FC<ChecklistProps> = ({ _id, title, items }) => {
               />
               <BottomButtonGroup
                 title="Add"
-                clickCallback={() => handleAddChecklistItem(_id)}
-                closeCallback={() => setShowAddItem(false)}
+                handleSubmit={() => handleAddChecklistItem(_id)}
+                handleClose={() => setShowAddItem(false)}
               />
             </TextAreaContainer>
           ) : (
             <Button
-              clickCallback={() => setShowAddItem(true)}
+              onClick={() => setShowAddItem(true)}
               title="Add an item"
+              children={undefined}
             />
           )}
         </RightColumn>

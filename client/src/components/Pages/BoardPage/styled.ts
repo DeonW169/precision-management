@@ -1,7 +1,23 @@
 import styled from 'styled-components';
-import { md } from '../../../BreakPoints';
+import { md } from '../../../Breakpoints';
 
 export const Container = styled.div`
+	width: 100vw;
+	height: 100vh;
+	background: linear-gradient(
+		90deg,
+		rgba(32, 39, 57, 1) 0%,
+		rgba(52, 63, 96, 1) 100%
+	);
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0.5rem;
+	box-sizing: border-box;
+`;
+
+export const ListContainer = styled.div`
 	width: 100vw;
 	height: 100vh;
 	background: linear-gradient(

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addList } from "../../../../Redux/Slices/listSlice";
+import { successCreatingList } from "../../../../../redux/slices/listSlice";
 import {
   Container,
   AddBtn,
@@ -17,7 +17,8 @@ const AddList: React.FC<{ boardId: string }> = ({ boardId }) => {
 
   const handleAdd = () => {
     if (!title) return;
-    dispatch(addList({ title, boardId }));
+    const payload = { title, boardId, _id: "", cards: [] };
+    dispatch(successCreatingList(payload));
     setIsAdding(false);
     setTitle("");
   };

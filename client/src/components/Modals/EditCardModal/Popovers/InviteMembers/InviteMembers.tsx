@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Container, SearchContainer, SearchBar, ChipContainer } from "./styled";
-import Button from "../../ReUsableComponents/Button";
+import Button from "../../Shared/Button";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
 import { makeStyles } from "@mui/styles";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserFromEmail } from "../../../../../Services/userService";
-import { openAlert } from "../../../../../Redux/Slices/alertSlice";
-import { boardMemberAdd } from "../../../../../Services/boardService";
-import { RootState } from "../../../../../Redux/store";
+// import { getUserFromEmail } from "../../../../../services/userService";
+import { openAlert } from "../../../../../redux/slices/alertSlice";
+import { boardMemberAdd } from "../../../../../services/boardService";
+import { RootState } from "../../../../../redux/store";
 
 interface Member {
   name: string;
@@ -71,10 +71,10 @@ const InviteMembers: React.FC = () => {
       return;
     }
 
-    const result = await getUserFromEmail(memberMail, dispatch);
-    if (!result) return;
-    setMembers((prev) => [...prev, result]);
-    setMemberMail("");
+    // const result = await getUserFromEmail(memberMail, dispatch);
+    // if (!result) return;
+    // setMembers((prev) => [...prev, result]);
+    // setMemberMail("");
   };
 
   const handleDelete = (email: string) => {
@@ -98,7 +98,8 @@ const InviteMembers: React.FC = () => {
         <Button
           title="Add"
           style={{ flex: "1" }}
-          clickCallback={handleAddClick}
+          children={undefined}
+          // clickCallback={handleAddClick}
         />
       </SearchContainer>
       <ChipContainer>
@@ -111,7 +112,8 @@ const InviteMembers: React.FC = () => {
         ))}
       </ChipContainer>
       {members.length > 0 && (
-        <Button clickCallback={handleInviteClick} title="Invite" />
+        // <Button clickCallback={handleInviteClick} title="Invite" />
+        <Button children={undefined} title="Invite" />
       )}
     </Container>
   );

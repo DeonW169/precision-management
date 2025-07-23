@@ -32,3 +32,7 @@ code {
 .nav-item {
   margin: 15px;
 }
+
+.card-container {
+  background-color: red;
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
-import { openModal } from "../../../Redux/Slices/modalSlice";
+// import { openModal } from "../../../redux/slices/modalSlice";
 import { CardContainer } from "./styled";
 
 interface Label {
@@ -39,14 +39,14 @@ const Card: React.FC<CardProps> = ({
   const dispatch = useDispatch();
 
   const handleOpen = () => {
-    dispatch(
-      openModal({
-        type: "cardDetail",
-        cardId,
-        listId,
-        boardId,
-      })
-    );
+    // dispatch(
+      // openModal({
+      //   type: "cardDetail",
+      //   cardId,
+      //   listId,
+      //   boardId,
+      // })
+    // );
   };
 
   return (

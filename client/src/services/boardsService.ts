@@ -9,7 +9,7 @@ import {
     failCreatingBoard,
     reset,
 } from '../redux/slices/boardsSlice';
-import { addNewBoard } from '../redux/slices/userSlice';
+// import { addNewBoard } from '../redux/slices/userSlice';
 import {
     setLoading,
     successFetchingBoard,
@@ -17,14 +17,12 @@ import {
 } from '../redux/slices/boardSlice';
 
 import { AppDispatch } from '../redux/store';
+import { Routes } from '../api/routes';
 
-const baseUrl = 'http://localhost:3001/board';
-
-// Define the type for board creation
 interface CreateBoardProps {
     title: string;
     backgroundImageLink: string;
-    [key: string]: any; // optional support for additional props
+    [key: string]: any;
 }
 
 export const getBoards = async (
@@ -33,7 +31,7 @@ export const getBoards = async (
 ): Promise<void> => {
     if (!fromDropDown) dispatch(startFetchingBoards());
     try {
-        const res = await axios.get(`${baseUrl}/`);
+        const res = await axios.get(`${Routes.BOARD}/`);
         setTimeout(() => {
             dispatch(successFetchingBoards({ boards: res.data }));
         }, 1000);
@@ -42,7 +40,7 @@ export const getBoards = async (
         dispatch(
             openAlert({
                 message:
-                    error?.response?.data?.errMessage || error.message,
+                    error?.response?.data?.message || error.message,
                 severity: 'error',
             })
         );
@@ -67,8 +65,8 @@ export const createBoard = async (
     }
 
     try {
-        const res = await axios.post(`${baseUrl}/create`, props);
-        dispatch(addNewBoard(res.data));
+        const res = await axios.post(`${Routes.BOARD}/create`, props);
+        // dispatch(addNewBoard(res.data));
         dispatch(successCreatingBoard(res.data));
         dispatch(
             openAlert({
@@ -81,7 +79,7 @@ export const createBoard = async (
         dispatch(
             openAlert({
                 message:
-                    error?.response?.data?.errMessage || error.message,
+                    error?.response?.data?.message || error.message,
                 severity: 'error',
             })
         );
@@ -94,7 +92,7 @@ export const getBoard = async (
 ): Promise<void> => {
     dispatch(setLoading(true));
     try {
-        const res = await axios.get(`${baseUrl}/${boardId}`);
+        const res = await axios.get(`${Routes.BOARD}/${boardId}`);
         dispatch(successFetchingBoard(res.data));
         setTimeout(() => {
             dispatch(setLoading(false));
@@ -104,7 +102,7 @@ export const getBoard = async (
         dispatch(
             openAlert({
                 message:
-                    error?.response?.data?.errMessage || error.message,
+                    error?.response?.data?.message || error.message,
                 severity: 'error',
             })
         );
@@ -118,12 +116,12 @@ export const boardTitleUpdate = async (
 ): Promise<void> => {
     try {
         dispatch(updateTitle(title));
-        await axios.put(`${baseUrl}/${boardId}/update-board-title`, { title });
+        await axios.put(`${Routes.BOARD}/${boardId}/update-board-title`, { title });
     } catch (error: any) {
         dispatch(
             openAlert({
                 message:
-                    error?.response?.data?.errMessage || error.message,
+                    error?.response?.data?.message || error.message,
                 severity: 'error',
             })
         );

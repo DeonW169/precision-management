@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { SearchArea, Title, BlueButton } from "../Labels/styled";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { attachmentUpdate } from "../../../../../Services/cardService";
-import { RootState } from "../../../../../Redux/store";
+import { attachmentUpdate } from "../../../../../services/cardService";
+import { RootState } from "../../../../../redux/store";
 
 const Container = styled.div`
   display: flex;

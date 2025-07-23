@@ -3,8 +3,8 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertColor, AlertProps } from "@mui/material/Alert";
 import { useSelector, useDispatch } from "react-redux";
 import { closeAlert } from "../redux/slices/alertSlice";
-import { useHistory } from "react-router-dom";
-import { RootState } from "../redux/store"; // adjust if your store is defined elsewhere
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../redux/store";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -15,7 +15,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 const AlertSnackBar: React.FC = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { open, message, severity, duration, nextRoute } = useSelector(
     (state: RootState) => state.alert
@@ -30,7 +30,7 @@ const AlertSnackBar: React.FC = () => {
     dispatch(closeAlert());
     if (nextRoute) {
       try {
-        history.push(nextRoute);
+        navigate(nextRoute);
       } catch (error) {
         console.error("Navigation error:", error);
       }
